@@ -10,7 +10,7 @@ export function buildWebpackConfig(
   options: BuildOptions,
 ): webpack.Configuration {
   const { paths, mode, isDev } = options;
-  console.log("LOADERS", buildLoaders(options));
+
   return {
     mode,
     entry: paths.entry,
