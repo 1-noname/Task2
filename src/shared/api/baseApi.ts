@@ -5,7 +5,15 @@ export const baseApi = createApi({
   tagTypes: ["Product"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://dummyjson.com/",
-    credentials: "include",
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
   endpoints: () => ({}),
 });
