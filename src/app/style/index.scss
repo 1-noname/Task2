@@ -1,0 +1,18 @@
+@use "./variables/global.scss" as *;
+@use "./reset.scss";
+
+body {
+  background: var(--bg-primary);
+  color: var(--color-primary);
+  height: 100vh;
+  margin: 0;
+}
+
+textarea,
+input {
+  color: var(--focus-primary);
+}
+
+.MuiInputBase-input {
+  color: var(--focus-primary) !important;
+}
