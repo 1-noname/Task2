@@ -30,6 +30,23 @@ const productsApi = baseApi.injectEndpoints({
         method: "PUT",
         body: partial,
       }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        const productResult = dispatch(
+          productsApi.util.updateQueryData(
+            "getProducts",
+            undefined,
+            (draft) => {
+              Object.assign(draft, args);
+            },
+          ),
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          productResult.undo();
+        }
+      },
+
       invalidatesTags: (result, error, { id }) => [
         { type: "Product", id },
         { type: "Product", id: "LIST" },
