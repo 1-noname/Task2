@@ -1,13 +1,17 @@
 import { baseApi } from "@/shared/api/baseApi";
 
-import type { User } from "../model/types";
+import type { LoginRequest, LoginResponse } from "../model/types";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    login: build.query<User[], void>({
-      query: () => "/users",
+    login: build.mutation<LoginResponse, LoginRequest>({
+      query: (body) => ({
+        url: "/auth/login",
+        method: "POST",
+        body,
+      }),
     }),
   }),
 });
 
-export const { useLoginQuery } = authApi;
+export const { useLoginMutation } = authApi;

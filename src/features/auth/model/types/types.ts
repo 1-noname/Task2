@@ -10,7 +10,6 @@ export interface User {
   password: string;
   birthDate: string;
   image: string;
-  token: string;
 }
 
 export interface LoginRequest {
@@ -19,5 +18,6 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse extends User {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
 }
