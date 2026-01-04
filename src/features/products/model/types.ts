@@ -7,3 +7,15 @@ export interface Product {
   rating: number;
   stock: number;
 }
+
+export interface ProductsResponse {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+export interface ProductsLimit {
+  limit: number;
+  skip: number;
+}
