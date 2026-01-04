@@ -49,13 +49,17 @@ const productsApi = baseApi.injectEndpoints({
         method: "PUT",
         body: partial,
       }),
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
         const productResult = dispatch(
           productsApi.util.updateQueryData(
             "getProducts",
             undefined,
             (draft) => {
-              Object.assign(draft, args);
+              const updatedProduct = draft.products.find(
+                (product) => product.id === id,
+              );
+
+              if (updatedProduct) Object.assign(updatedProduct, patch);
             },
           ),
         );
