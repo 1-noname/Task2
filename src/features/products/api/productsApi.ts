@@ -1,15 +1,34 @@
 import { baseApi } from "@/shared/api/baseApi";
 
-import { Product } from "../model/types";
+import { Product, ProductsLimit, ProductsResponse } from "../model/types";
 
 const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getProducts: build.query<Product[], void>({
-      query: () => "/products",
+    getProducts: build.query<ProductsResponse, ProductsLimit>({
+      query: ({ limit = 6, skip = 0 }) => ({
+        url: "/products",
+        params: { limit, skip },
+      }),
+
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+
+      merge: (currentCache, newItems) => {
+        currentCache.products.push(...newItems.products);
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg.skip !== previousArg.skip;
+      },
+
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "Product" as const, id })),
+              ...result.products.map(({ id }) => ({
+                type: "Product" as const,
+                id,
+              })),
               { type: "Product", id: "LIST" },
             ]
           : [{ type: "Product", id: "LIST" }],
