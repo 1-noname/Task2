@@ -1,13 +1,10 @@
 import { ProductCard } from "@/entities/product";
 import { PageLoader } from "@/shared/ui/PageLoader";
 
-import { useGetProductsQuery } from "../api/productsApi";
+import { useProductsList } from "../model/hooks/useProductsList";
 
 export const ProductsList = () => {
-  const { data, isLoading, isError } = useGetProductsQuery({
-    limit: 6,
-    skip: 0,
-  });
+  const { products, isLoading, isError, trigger } = useProductsList();
 
   if (isLoading) {
     return <PageLoader />;
@@ -19,8 +16,7 @@ export const ProductsList = () => {
 
   return (
     <div>
-      {console.log("current data: ", data)}
-      {data?.products.map(({ id, title, description, category }) => (
+      {products.map(({ id, title, description, category }) => (
         <ProductCard
           key={id}
           id={id}
@@ -29,6 +25,7 @@ export const ProductsList = () => {
           category={category}
         />
       ))}
+      <div ref={trigger}></div>
     </div>
   );
 };
