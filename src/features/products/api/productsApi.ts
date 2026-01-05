@@ -19,7 +19,7 @@ const productsApi = baseApi.injectEndpoints({
       },
 
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg.skip !== previousArg.skip;
+        return currentArg?.skip !== previousArg?.skip;
       },
 
       providesTags: (result) =>
