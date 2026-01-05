@@ -4,3 +4,4 @@ export {
   useGetProductsQuery,
   useUpdateProductMutation,
 } from "./api/productsApi";
+export { ProductsList } from "./ui/ProductsList";
