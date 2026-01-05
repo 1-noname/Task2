@@ -1,6 +1,7 @@
 import { RouteProps } from "react-router-dom";
 
 import { LoginPage } from "@/pages/LoginPage";
+import { MainPage } from "@/pages/MainPage";
 import { NotFound } from "@/pages/NotFound";
 
 export type AppRouteProps = RouteProps & {
@@ -34,7 +35,7 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
 
   [AppRoutes.MAIN]: {
     path: routePaths.main,
-    element: <div>haloooo</div>,
+    element: <MainPage />,
     authOnly: true,
   },
 };
