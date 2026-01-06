@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import {
   Button,
   Card,
@@ -11,6 +13,8 @@ interface ProductCardProps {
   title: string;
   description: string;
   category: string;
+  onLearnMore: () => void;
+  deleteButton: ReactNode;
 }
 
 export const ProductCard = ({
@@ -18,6 +22,8 @@ export const ProductCard = ({
   title,
   description,
   category,
+  onLearnMore,
+  deleteButton,
 }: ProductCardProps) => {
   return (
     <Card>
@@ -31,7 +37,10 @@ export const ProductCard = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={onLearnMore}>
+          Learn More
+        </Button>
+        {deleteButton}
       </CardActions>
     </Card>
   );
