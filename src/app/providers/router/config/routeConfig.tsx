@@ -12,12 +12,14 @@ enum AppRoutes {
   LOGIN = "login",
   NOT_FOUND = "not_found",
   MAIN = "main",
+  PRODUCT_DETAILD = "product_details",
 }
 
 const routePaths: Record<AppRoutes, string> = {
   [AppRoutes.LOGIN]: "/login",
   [AppRoutes.NOT_FOUND]: "*",
   [AppRoutes.MAIN]: "/",
+  [AppRoutes.PRODUCT_DETAILD]: "/products/:id",
 };
 
 export const routeConfig: Record<AppRoutes, AppRouteProps> = {
@@ -36,6 +38,12 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
   [AppRoutes.MAIN]: {
     path: routePaths.main,
     element: <MainPage />,
+    authOnly: true,
+  },
+
+  [AppRoutes.PRODUCT_DETAILD]: {
+    path: routePaths.product_details,
+    element: <div>ITS WORKING OR NOT</div>,
     authOnly: true,
   },
 };
