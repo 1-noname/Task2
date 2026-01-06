@@ -8,11 +8,12 @@ body {
   margin: 0;
 }
 
-textarea,
-input {
-  color: var(--focus-primary);
-}
-
 .MuiInputBase-input {
   color: var(--focus-primary) !important;
+}
+
+.app {
+  max-width: var(--container-width-xl);
+  width: 100%;
+  margin: 0 auto;
 }
