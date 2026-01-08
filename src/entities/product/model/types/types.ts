@@ -5,7 +5,7 @@ export interface Product {
   category: string;
   price: number;
   rating: number;
-  stock: number;
+  thumbnail: string;
 }
 
 export interface ProductsResponse {
@@ -18,4 +18,5 @@ export interface ProductsResponse {
 export interface ProductsLimit {
   limit: number;
   skip: number;
+  search?: string;
 }
