@@ -1,18 +1,12 @@
-import { useNavigate } from "react-router-dom";
-
 import { ProductCard } from "@/entities/product";
 import { DeleteProduct } from "@/features/deleteProduct";
 import { PageLoader } from "@/shared/ui/PageLoader";
 
 import { useLazyDataFetching } from "../model/hooks/useLazyDataFetching";
+import cls from "./ProductsList.module.scss";
 
 export const ProductsList = () => {
   const { products, isLoading, isError, trigger } = useLazyDataFetching();
-  const navigate = useNavigate();
-
-  const handleNavigate = (id: number) => {
-    navigate(`/products/${id}`);
-  };
 
   if (isLoading) {
     return <PageLoader />;
@@ -23,18 +17,21 @@ export const ProductsList = () => {
   }
 
   return (
-    <div>
-      {products.map(({ id, title, description, category }) => (
-        <ProductCard
-          key={id}
-          id={id}
-          title={title}
-          description={description}
-          category={category}
-          deleteButton={<DeleteProduct id={id} />}
-          onLearnMore={handleNavigate(id)}
-        />
-      ))}
+    <div className={cls.products}>
+      {products.map(
+        ({ id, title, description, category, thumbnail, price }) => (
+          <ProductCard
+            key={id}
+            id={id}
+            title={title}
+            description={description}
+            category={category}
+            thumbnail={thumbnail}
+            price={price}
+            deleteButton={<DeleteProduct id={id} />}
+          />
+        ),
+      )}
       <div ref={trigger}></div>
     </div>
   );
