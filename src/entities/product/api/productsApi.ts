@@ -9,13 +9,28 @@ import type {
 const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query<ProductsResponse, ProductsLimit>({
-      query: ({ limit = 6, skip = 0 }) => ({
-        url: "/products",
-        params: { limit, skip },
-      }),
+      query: ({ limit = 6, skip = 0, search }) => {
+        if (search) {
+          return {
+            url: "products/search",
+            params: {
+              q: search,
+              limit,
+              skip,
+            },
+          };
+        }
 
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
+        return {
+          url: "products",
+          params: {
+            limit,
+            skip,
+          },
+        };
+      },
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}-${queryArgs?.search ?? ""}`;
       },
 
       merge: (currentCache, newItems) => {
