@@ -1,0 +1,12 @@
+.content {
+  display: grid;
+  gap: 8px;
+}
+
+.withFilter {
+  grid-template-columns: 2fr 1fr;
+}
+
+.noFilter {
+  grid-template-columns: 1fr;
+}
