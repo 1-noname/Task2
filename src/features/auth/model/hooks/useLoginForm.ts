@@ -23,7 +23,7 @@ export const useLoginForm = () => {
 
       navigate("/");
     } catch (e) {
-      if (e.status === 401) {
+      if (e.status === 400) {
         setErrorMsg("Неверный логин или пароль");
       } else {
         setErrorMsg("Ошибка сервера. Попробуйте позже");
