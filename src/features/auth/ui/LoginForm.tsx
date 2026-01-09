@@ -15,6 +15,7 @@ export const LoginForm = () => {
     setPassword,
     isFilled,
     handleLogin,
+    errorMsg,
   } = useLoginForm();
 
   const handleLoginWriting = (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,6 +97,8 @@ export const LoginForm = () => {
           },
         }}
       />
+
+      {errorMsg && <div className={cls.error}>{errorMsg}</div>}
 
       <Button
         variant="contained"
