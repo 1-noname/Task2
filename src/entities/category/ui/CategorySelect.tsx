@@ -34,7 +34,7 @@ export const CategorySelect = ({
     <Card
       sx={{
         background: "transparent",
-        color: "white",
+        color: "var(--color-secondary)",
         padding: "var(--space-sm)",
         boxShadow: "none",
         minWidth: 200,
@@ -45,7 +45,7 @@ export const CategorySelect = ({
       </Typography>
 
       <FormControl fullWidth disabled={isLoading}>
-        <InputLabel>Select</InputLabel>
+        <InputLabel sx={{ color: "var(--color-secondary)" }}>Select</InputLabel>
 
         <Select<string>
           value={uiValue}
@@ -57,8 +57,8 @@ export const CategorySelect = ({
                 label={value}
                 size="small"
                 sx={{
-                  backgroundColor: "var(--bg-secondary-invert)",
-                  color: "white",
+                  background: "var(--bg-secondary-invert)",
+                  color: "var(--color-secondary)",
                 }}
               />
             ) : (
