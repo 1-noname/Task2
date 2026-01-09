@@ -1,3 +1,4 @@
+import categorySlice from "@/features/filterCategory/model/slice/categorySlice";
 import searchSlice from "@/features/searchProduct/model/slice/searchSlice";
 import { baseApi } from "@/shared/api/baseApi";
 
@@ -7,6 +8,7 @@ export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     search: searchSlice,
+    category: categorySlice,
   },
   devTools: __IS_DEV__,
   middleware: (getDefaultMiddleware) =>
