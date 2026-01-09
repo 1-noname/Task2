@@ -65,6 +65,7 @@ export const LoginForm = () => {
 
       <TextField
         label="Пароль"
+        type="password"
         variant="outlined"
         value={password}
         onChange={handlePasswordWriting}
