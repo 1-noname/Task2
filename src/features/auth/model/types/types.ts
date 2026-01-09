@@ -1,3 +1,5 @@
+type Role = "admin" | "moderator" | "user";
+
 export interface User {
   id: number;
   firstName: string;
@@ -10,6 +12,7 @@ export interface User {
   password: string;
   birthDate: string;
   image: string;
+  role: Role;
 }
 
 export interface LoginRequest {
