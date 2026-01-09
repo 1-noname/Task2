@@ -7,9 +7,9 @@ export const LoginPage = () => {
     <div className={cls.login}>
       <div className={cls.loginContainer}>
         <div className={cls.loginHeader}>
-          <div className={cls.loginTitle}>Авторизация</div>
+          <div className={cls.loginTitle}>Authorization</div>
           <div className={cls.loginDesc}>
-            Введите имя пользователя и пароль, чтобы войти в свою учетную запись
+            Enter your username and password to log in to your account
           </div>
           <LoginForm />
         </div>
