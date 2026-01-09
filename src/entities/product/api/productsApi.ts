@@ -8,13 +8,27 @@ import type {
 
 const productsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
+    getCategories: build.query<string[], void>({
+      query: () => "products/category-list",
+    }),
+
     getProducts: build.query<ProductsResponse, ProductsLimit>({
-      query: ({ limit = 6, skip = 0, search }) => {
+      query: ({ limit = 6, skip = 0, search, category }) => {
         if (search) {
           return {
             url: "products/search",
             params: {
               q: search,
+              limit,
+              skip,
+            },
+          };
+        }
+
+        if (category) {
+          return {
+            url: `products/category/${category}`,
+            params: {
               limit,
               skip,
             },
@@ -29,16 +43,25 @@ const productsApi = baseApi.injectEndpoints({
           },
         };
       },
-      serializeQueryArgs: ({ endpointName, queryArgs }) => {
-        return `${endpointName}-${queryArgs?.search ?? ""}`;
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
       },
 
-      merge: (currentCache, newItems) => {
-        currentCache.products.push(...newItems.products);
+      merge: (currentCache, newItems, { arg }) => {
+        if (arg.skip === 0) {
+          currentCache.products = newItems.products;
+          currentCache.total = newItems.total;
+        } else {
+          currentCache.products.push(...newItems.products);
+        }
       },
 
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg?.skip !== previousArg?.skip;
+        return (
+          currentArg?.skip !== previousArg?.skip ||
+          currentArg?.category !== previousArg?.category ||
+          currentArg?.search !== previousArg?.search
+        );
       },
 
       providesTags: (result) =>
@@ -113,4 +136,5 @@ export const {
   useAddProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useGetCategoriesQuery,
 } = productsApi;

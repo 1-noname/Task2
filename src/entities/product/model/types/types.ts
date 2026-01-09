@@ -19,4 +19,5 @@ export interface ProductsLimit {
   limit: number;
   skip: number;
   search?: string;
+  category?: string;
 }

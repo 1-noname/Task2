@@ -1,6 +1,7 @@
 export {
   useAddProductMutation,
   useDeleteProductMutation,
+  useGetCategoriesQuery,
   useGetProductsQuery,
   useUpdateProductMutation,
 } from "./api/productsApi";
