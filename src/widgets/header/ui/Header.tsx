@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useHeader } from "../model/hooks/useHeader";
 
 import AdbIcon from "@mui/icons-material/Adb";
+import LogoutIcon from "@mui/icons-material/Logout"; // Иконка выхода
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
@@ -11,136 +12,176 @@ import {
   Button,
   Container,
   IconButton,
+  ListItemIcon,
   Menu,
   MenuItem,
-  Skeleton,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@mui/material";
 
 export const Header = () => {
   const {
     user,
-    isLoading,
     anchorElNav,
+    anchorElUser,
     handleOpenNavMenu,
     handleCloseNavMenu,
+    handleOpenUserMenu,
+    handleCloseUserMenu,
+    handleLogout,
   } = useHeader();
 
   return (
-    <AppBar position="static" sx={{ background: "var(--header-bg)" }}>
-      <Container
-        maxWidth="xl"
+    <div style={{ background: "var(--header-bg)" }}>
+      <AppBar
+        position="static"
         sx={{
           maxWidth: "var(--container-width-xl)",
           width: "100%",
           margin: "0 auto",
+          background: "var(--header-bg)",
+          boxShadow: "none",
         }}
       >
-        <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-              keepMounted
-              transformOrigin={{ vertical: "top", horizontal: "left" }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
-            >
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                component={Link}
-                to="/products"
-              >
-                <Typography textAlign="center">Products</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                component={Link}
-                to="/pricing"
-              >
-                <Typography textAlign="center">Pricing</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
-
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            <Button
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            {/* === ЛОГОТИП (Desktop) === */}
+            <Typography
+              variant="h6"
+              noWrap
               component={Link}
-              to="/products"
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
+              to="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
             >
-              Products
-            </Button>
-            <Button
-              component={Link}
-              to="/pricing"
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              Pricing
-            </Button>
-          </Box>
+              <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+            </Typography>
 
-          <Box sx={{ flexGrow: 0 }}>
-            {isLoading ? (
-              <Skeleton variant="circular" width={40} height={40} />
-            ) : (
-              <Avatar alt={user?.username} src={user?.image} />
-            )}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            {/* === МОБИЛЬНОЕ МЕНЮ === */}
+            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar-nav"
+                anchorEl={anchorElNav}
+                anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                keepMounted
+                transformOrigin={{ vertical: "top", horizontal: "left" }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{ display: { xs: "block", md: "none" } }}
+              >
+                <MenuItem
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to="/products"
+                >
+                  <Typography textAlign="center">Products</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to="/pricing"
+                >
+                  <Typography textAlign="center">Pricing</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+
+            {/* === ЛОГОТИП (Mobile) === */}
+            <Typography
+              variant="h5"
+              noWrap
+              component={Link}
+              to="/"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            ></Typography>
+
+            {/* === НАВИГАЦИЯ (Desktop) === */}
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              <Button
+                component={Link}
+                to="/"
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  color: "var(--color-secondary)",
+                  display: "block",
+                }}
+              >
+                Products
+              </Button>
+              <Button
+                component={Link}
+                to="/"
+                onClick={handleCloseNavMenu}
+                sx={{
+                  my: 2,
+                  color: "var(--color-secondary)",
+                  display: "block",
+                }}
+              >
+                Pricing
+              </Button>
+            </Box>
+
+            {/* === АВАТАРКА И МЕНЮ ПРОФИЛЯ === */}
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={user?.username || "User"} src={user?.image} />
+                </IconButton>
+              </Tooltip>
+
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar-user"
+                anchorEl={anchorElUser}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                keepMounted
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+
+                <MenuItem onClick={handleLogout}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" />
+                  </ListItemIcon>
+                  <Typography textAlign="center" color="error">
+                    Logout
+                  </Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </div>
   );
 };
