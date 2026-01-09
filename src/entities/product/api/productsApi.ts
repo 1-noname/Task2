@@ -125,10 +125,27 @@ const productsApi = baseApi.injectEndpoints({
         url: `products/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, id) => [
-        { type: "Product", id },
-        { type: "Product", id: "LIST" },
-      ],
+
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            productsApi.util.updateQueryData(
+              "getProducts",
+              { limit: 6, skip: 0 },
+              (draft) => {
+                draft.products = draft.products.filter(
+                  (product) => product.id !== id,
+                );
+                draft.total -= 1;
+              },
+            ),
+          );
+        } catch (e) {
+          console.error("Delete failed", e);
+        }
+      },
     }),
   }),
 });
