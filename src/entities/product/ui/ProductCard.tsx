@@ -48,7 +48,16 @@ export const ProductCard = ({
       <CardMedia
         component="img"
         image={thumbnail}
-        sx={{ width: "215px", height: "260px", objectFit: "cover" }}
+        sx={{
+          objectFit: "cover",
+          display: "none",
+
+          "@media (min-width: 1024px)": {
+            display: "block",
+            width: 215,
+            height: 260,
+          },
+        }}
       />
       <CardContent
         sx={{
