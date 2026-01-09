@@ -12,6 +12,10 @@ const productsApi = baseApi.injectEndpoints({
       query: () => "products/category-list",
     }),
 
+    getProductById: build.query<Product, string>({
+      query: (id) => `products/${id}`,
+    }),
+
     getProducts: build.query<ProductsResponse, ProductsLimit>({
       query: ({ limit = 6, skip = 0, search, category }) => {
         if (search) {
@@ -91,24 +95,22 @@ const productsApi = baseApi.injectEndpoints({
         method: "PUT",
         body: partial,
       }),
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        const productResult = dispatch(
-          productsApi.util.updateQueryData(
-            "getProducts",
-            undefined,
-            (draft) => {
-              const updatedProduct = draft.products.find(
-                (product) => product.id === id,
-              );
 
-              if (updatedProduct) Object.assign(updatedProduct, patch);
-            },
-          ),
-        );
+      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled;
+          const { data: updatedProduct } = await queryFulfilled;
+
+          dispatch(
+            productsApi.util.updateQueryData(
+              "getProductById",
+              id.toString(),
+              (draft) => {
+                Object.assign(draft, updatedProduct);
+              },
+            ),
+          );
         } catch {
-          productResult.undo();
+          console.error("Update failed");
         }
       },
 
@@ -137,4 +139,5 @@ export const {
   useUpdateProductMutation,
   useDeleteProductMutation,
   useGetCategoriesQuery,
+  useGetProductByIdQuery,
 } = productsApi;
