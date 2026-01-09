@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import { PageLoader } from "@/shared/ui/PageLoader";
+import { PageLoader } from "@/shared/ui";
 
 import { AppRouteProps, routeConfig } from "../config/routeConfig";
 import { RequireAuth } from "./RequireAuth";
