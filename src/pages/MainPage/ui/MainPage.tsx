@@ -25,7 +25,12 @@ export const MainPage = () => {
         className={`${cls.content} ${isFilterOpen ? cls.withFilter : cls.noFilter}`}
       >
         <ProductsList />
-        {isFilterOpen && <ProductsFilter />}
+
+        {isFilterOpen && (
+          <div className={cls.filters}>
+            <ProductsFilter />
+          </div>
+        )}
       </div>
     </>
   );
