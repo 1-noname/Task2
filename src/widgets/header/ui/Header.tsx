@@ -82,20 +82,17 @@ export const Header = () => {
                 transformOrigin={{ vertical: "top", horizontal: "left" }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{ display: { xs: "block", md: "none" } }}
+                sx={{
+                  display: {
+                    xs: "block",
+                    md: "none",
+                  },
+                }}
               >
-                <MenuItem
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to="/products"
-                >
+                <MenuItem onClick={handleCloseNavMenu} component={Link} to="/">
                   <Typography textAlign="center">Products</Typography>
                 </MenuItem>
-                <MenuItem
-                  onClick={handleCloseNavMenu}
-                  component={Link}
-                  to="/pricing"
-                >
+                <MenuItem onClick={handleCloseNavMenu} component={Link} to="/">
                   <Typography textAlign="center">Pricing</Typography>
                 </MenuItem>
               </Menu>
