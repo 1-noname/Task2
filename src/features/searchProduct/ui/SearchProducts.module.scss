@@ -26,6 +26,8 @@
   border: none;
   color: white;
   background: var(--bg-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
 }
 
 @media (min-width: 1280px) {

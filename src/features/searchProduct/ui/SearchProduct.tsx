@@ -5,10 +5,14 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 
 interface SearchProductProps {
-  isOpen: boolean;
+  isFilterOpen: boolean;
+  onToggle: () => void;
 }
 
-export const SearchProduct = ({ isOpen }: SearchProductProps) => {
+export const SearchProduct = ({
+  isFilterOpen,
+  onToggle,
+}: SearchProductProps) => {
   const { handleChange } = useSearchProduct();
 
   return (
@@ -18,8 +22,8 @@ export const SearchProduct = ({ isOpen }: SearchProductProps) => {
         className={cls.input}
         onChange={handleChange}
       />
-      <button className={cls.button}>
-        {isOpen ? <FilterAltOffIcon /> : <FilterAltIcon />}
+      <button className={cls.button} onClick={onToggle}>
+        {isFilterOpen ? <FilterAltOffIcon /> : <FilterAltIcon />}
       </button>
     </div>
   );
