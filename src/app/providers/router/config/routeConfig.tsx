@@ -3,6 +3,7 @@ import { RouteProps } from "react-router-dom";
 import { LoginPage } from "@/pages/LoginPage";
 import { MainPage } from "@/pages/MainPage";
 import { NotFound } from "@/pages/NotFound";
+import { ProductDetailsPage } from "@/pages/ProductDetailsPage/ui/ProductDetailsPage";
 
 export type AppRouteProps = RouteProps & {
   authOnly?: boolean;
@@ -43,7 +44,7 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
 
   [AppRoutes.PRODUCT_DETAILD]: {
     path: routePaths.product_details,
-    element: <div>ITS WORKING OR NOT</div>,
+    element: <ProductDetailsPage />,
     authOnly: true,
   },
 };
