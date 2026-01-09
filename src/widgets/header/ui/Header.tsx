@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useHeader } from "../model/hooks/useHeader";
 
 import AdbIcon from "@mui/icons-material/Adb";
-import LogoutIcon from "@mui/icons-material/Logout"; // Иконка выхода
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,

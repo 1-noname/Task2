@@ -1,4 +1,5 @@
 import { MouseEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   logout,
@@ -9,9 +10,10 @@ import {
 import { useAppDispatch, useAppSelector } from "@/shared/lib";
 
 export const useHeader = () => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const { isLoading } = useMeQuery();
-
   const user = useAppSelector(selectUser);
   const isAuth = useAppSelector(selectIsAuth);
 
@@ -37,6 +39,7 @@ export const useHeader = () => {
   const handleLogout = () => {
     dispatch(logout());
     handleCloseUserMenu();
+    navigate("/login");
   };
 
   return {
