@@ -1,3 +1,4 @@
+import sessionSlice from "@/entities/session/model/sessionSlice";
 import categorySlice from "@/features/filterCategory/model/slice/categorySlice";
 import searchSlice from "@/features/searchProduct/model/slice/searchSlice";
 import { baseApi } from "@/shared/api/baseApi";
@@ -9,6 +10,7 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     search: searchSlice,
     category: categorySlice,
+    session: sessionSlice,
   },
   devTools: __IS_DEV__,
   middleware: (getDefaultMiddleware) =>
