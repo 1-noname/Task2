@@ -18,6 +18,7 @@ interface ProductCardProps {
   thumbnail: string;
   price: number;
   deleteButton: ReactNode;
+  isAdmin: boolean;
 }
 
 export const ProductCard = ({
@@ -28,6 +29,7 @@ export const ProductCard = ({
   thumbnail,
   price,
   deleteButton,
+  isAdmin,
 }: ProductCardProps) => {
   const navigate = useNavigate();
 
@@ -40,7 +42,7 @@ export const ProductCard = ({
       sx={{
         display: "flex",
         background: "transparent",
-        color: "white",
+        color: "var(--color-secondary)",
       }}
     >
       <CardMedia
@@ -64,12 +66,12 @@ export const ProductCard = ({
         <Typography variant="body2" sx={{ color: "var(--color-primary)" }}>
           {description}
         </Typography>
-        <Typography variant="body1">{`${price} $`}</Typography>
+        <Typography variant="body1">{`$${price}`}</Typography>
         <CardActions sx={{ paddingLeft: "0px" }}>
           <Button size="small" onClick={handleNavigate(id)}>
             Learn More
           </Button>
-          {deleteButton}
+          {isAdmin ? deleteButton : null}
         </CardActions>
       </CardContent>
     </Card>
