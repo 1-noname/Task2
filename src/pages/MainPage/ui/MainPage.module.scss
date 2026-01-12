@@ -1,0 +1,31 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: 0 var(--space-xs);
+}
+
+.filters {
+  order: -1;
+}
+
+@media (min-width: 1024px) {
+  .content {
+    display: grid;
+    gap: var(--space-xs);
+    align-items: start;
+    padding: 0;
+  }
+
+  .filters {
+    order: unset;
+  }
+
+  .withFilter {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .noFilter {
+    grid-template-columns: 1fr;
+  }
+}

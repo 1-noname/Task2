@@ -1,0 +1,18 @@
+@use "./variables/global.scss" as *;
+@use "./reset.scss";
+
+body {
+  background: var(--bg-primary);
+  height: 100vh;
+  margin: 0;
+}
+
+.MuiInputBase-input {
+  color: var(--focus-primary) !important;
+}
+
+.app {
+  max-width: var(--container-width-xl);
+  width: 100%;
+  margin: 0 auto;
+}
