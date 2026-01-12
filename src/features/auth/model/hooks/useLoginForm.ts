@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../api/authApi";
 
 export const useLoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const [login, { isLoading, isError }] = useLoginMutation();
   const navigate = useNavigate();
@@ -14,16 +15,19 @@ export const useLoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      const data = await login({ username, password }).unwrap();
+      setErrorMsg(null);
 
-      console.log("FULL DATA", data);
-      console.log("TOKEN SUCCESS:", data.accessToken);
+      const data = await login({ username, password }).unwrap();
 
       localStorage.setItem("token", data.accessToken);
 
       navigate("/");
     } catch (e) {
-      console.log("ERROR: ", e);
+      if (e.status === 400) {
+        setErrorMsg("Неверный логин или пароль");
+      } else {
+        setErrorMsg("Ошибка сервера. Попробуйте позже");
+      }
     }
   };
 
@@ -36,5 +40,6 @@ export const useLoginForm = () => {
     handleLogin,
     isLoading,
     isError,
+    errorMsg,
   };
 };

@@ -15,6 +15,7 @@ export const LoginForm = () => {
     setPassword,
     isFilled,
     handleLogin,
+    errorMsg,
   } = useLoginForm();
 
   const handleLoginWriting = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +29,7 @@ export const LoginForm = () => {
   return (
     <form className={cls.loginForm}>
       <TextField
-        label="Логин"
+        label="Login"
         variant="outlined"
         value={username}
         onChange={handleLoginWriting}
@@ -63,7 +64,8 @@ export const LoginForm = () => {
       />
 
       <TextField
-        label="Пароль"
+        label="Password"
+        type="password"
         variant="outlined"
         value={password}
         onChange={handlePasswordWriting}
@@ -97,6 +99,8 @@ export const LoginForm = () => {
         }}
       />
 
+      {errorMsg && <div className={cls.error}>{errorMsg}</div>}
+
       <Button
         variant="contained"
         disabled={!isFilled}
@@ -111,7 +115,7 @@ export const LoginForm = () => {
           background: "var(--button-active)",
         }}
       >
-        Авторизация
+        Authorization
       </Button>
     </form>
   );

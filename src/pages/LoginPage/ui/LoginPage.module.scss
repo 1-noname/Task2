@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  color: var(--gray-light);
+  padding: 0 var(--space-md);
 }
 
 .loginContainer {
@@ -20,8 +22,10 @@
 
 .loginTitle {
   font-size: var(--font-size-xl);
+  color: var(--color-secondary);
 }
 
 .loginDesc {
   font-size: var(--font-size-xs);
+  margin-top: var(--space-sm);
 }

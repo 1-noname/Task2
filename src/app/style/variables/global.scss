@@ -8,6 +8,11 @@
 
   --bg-primary: #121212;
   --bg-secondary: var(--gray-dark);
+  --bg-secondary-invert: var(--gray-light);
+
+  --header-bg: #000;
+
+  --widgets-bg: var(--gray-dark);
 
   --color-primary: var(--gray-light);
   --color-secondary: var(--white);
@@ -41,4 +46,6 @@
   --width-md: 800px;
 
   --radius-sm: 8px;
+
+  --container-width-xl: 1280px;
 }

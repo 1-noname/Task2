@@ -1,7 +1,7 @@
-import { LoginResponse } from "@/features/auth/model/types";
+import { LoginResponse } from "@/features/auth";
 import { baseApi } from "@/shared/api/baseApi";
 
-const sessionApi = baseApi.injectEndpoints({
+export const sessionApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     me: build.query<LoginResponse, void>({
       query: () => "/auth/me",

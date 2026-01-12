@@ -1,0 +1,37 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs);
+}
+
+.input {
+  flex: 1;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--bg-secondary);
+  color: white;
+  padding-left: 5px;
+  font-size: var(--font-size-base);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.button {
+  min-width: 48px;
+  height: 48px;
+  border: none;
+  color: white;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+@media (min-width: 1280px) {
+  .search {
+    padding: var(--space-xs) 0;
+  }
+}
