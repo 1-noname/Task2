@@ -80,13 +80,40 @@ const productsApi = baseApi.injectEndpoints({
           : [{ type: "Product", id: "LIST" }],
     }),
 
-    addProduct: build.mutation<Product, Omit<Product, "id">>({
+    addProduct: build.mutation<Product, Partial<Product>>({
       query: (body) => ({
         url: "products/add",
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body,
       }),
-      invalidatesTags: [{ type: "Product", id: "LIST" }],
+      async onQueryStarted(newProduct, { dispatch }) {
+        try {
+          const patchResult = {
+            id: Date.now(),
+            title: newProduct.title,
+            price: newProduct.price,
+            description: newProduct.description,
+            thumbnail: "",
+            category: "custom",
+          } as Product;
+
+          dispatch(
+            productsApi.util.updateQueryData(
+              "getProducts",
+              { limit: 6, skip: 0 },
+              (draft) => {
+                if (draft?.products) {
+                  draft.products.unshift(patchResult);
+                  draft.total += 1;
+                }
+              },
+            ),
+          );
+        } catch (e) {
+          console.error("Add failed", e);
+        }
+      },
     }),
 
     updateProduct: build.mutation<Product, { id: number } & Partial<Product>>({
