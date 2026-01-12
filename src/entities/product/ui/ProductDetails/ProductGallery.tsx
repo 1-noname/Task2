@@ -11,7 +11,6 @@ interface ProductGalleryProps {
 export const ProductGallery = ({ product }: ProductGalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<string>("");
 
-  // Логика выбора картинки при загрузке
   useEffect(() => {
     if (product?.images?.length) {
       setSelectedImage(product.images[0]);

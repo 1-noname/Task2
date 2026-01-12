@@ -32,6 +32,7 @@ export const ProductCard = ({
   isAdmin,
 }: ProductCardProps) => {
   const navigate = useNavigate();
+  const IS_FAKE_PRODUCT = id > 1000;
 
   const handleNavigate = (id: number) => () => {
     navigate(`/products/${id}`);
@@ -77,10 +78,14 @@ export const ProductCard = ({
         </Typography>
         <Typography variant="body1">{`$${price}`}</Typography>
         <CardActions sx={{ paddingLeft: "0px" }}>
-          <Button size="small" onClick={handleNavigate(id)}>
-            Learn More
+          <Button
+            size="small"
+            onClick={handleNavigate(id)}
+            disabled={IS_FAKE_PRODUCT}
+          >
+            {IS_FAKE_PRODUCT ? "Preview Only" : "Learn More"}
           </Button>
-          {isAdmin ? deleteButton : null}
+          {isAdmin && !IS_FAKE_PRODUCT ? deleteButton : null}
         </CardActions>
       </CardContent>
     </Card>
