@@ -59,6 +59,7 @@ const productsApi = baseApi.injectEndpoints({
           currentCache.total = newItems.total;
         } else {
           currentCache.products.push(...newItems.products);
+          currentCache.total = newItems.total;
         }
       },
 
