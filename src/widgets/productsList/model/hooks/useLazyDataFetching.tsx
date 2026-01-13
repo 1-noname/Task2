@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { LIMIT } from "@/entities/product";
@@ -12,6 +12,12 @@ export const useLazyDataFetching = () => {
   const search = useAppSelector(selectProductName);
   const category = useAppSelector(selectCategory);
 
+  const prevFilters = useRef({ search, category });
+  const isFiltersChange =
+    search !== prevFilters.current.search ||
+    category !== prevFilters.current.category;
+  const actualSkip = isFiltersChange ? 0 : skip;
+
   const querySearch = category ? "" : search;
 
   const { ref, inView } = useInView({
@@ -20,13 +26,16 @@ export const useLazyDataFetching = () => {
   });
   const { data, isLoading, isError, isFetching } = useGetProductsQuery({
     limit: LIMIT,
-    skip,
+    skip: actualSkip,
     search: querySearch,
     category,
   });
 
   useEffect(() => {
-    setSkip(0);
+    if (isFiltersChange) {
+      setSkip(0);
+      prevFilters.current = { search, category };
+    }
   }, [search, category]);
 
   useEffect(() => {
