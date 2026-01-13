@@ -21,9 +21,10 @@
 Для проверки работоспособности использовать данные аккаунты:
 
 Admin аккаунт:
-  Логин: emilys
-  Пароль: emilyspass
+- Логин: emilys
+- Пароль: emilyspass
 
 User аккаунт:
-  Логин: logant
-  Пароль: logantpass
+- Логин: logant
+- Пароль: logantpass
+
