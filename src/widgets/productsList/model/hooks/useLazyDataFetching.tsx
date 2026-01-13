@@ -12,6 +12,8 @@ export const useLazyDataFetching = () => {
   const search = useAppSelector(selectProductName);
   const category = useAppSelector(selectCategory);
 
+  const querySearch = category ? "" : search;
+
   const { ref, inView } = useInView({
     threshold: 0.5,
     rootMargin: "100px",
@@ -19,7 +21,7 @@ export const useLazyDataFetching = () => {
   const { data, isLoading, isError, isFetching } = useGetProductsQuery({
     limit: LIMIT,
     skip,
-    search,
+    search: querySearch,
     category,
   });
 
