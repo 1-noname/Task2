@@ -1,6 +1,8 @@
 import { ChangeEvent, useState } from "react";
 
 import { useAddProductMutation } from "@/entities/product/api/productsApi";
+import { useAppDispatch } from "@/shared/lib";
+import { showNotification } from "@/shared/lib/slice/notificationSlice";
 
 interface FormError {
   title?: string;
@@ -10,6 +12,7 @@ interface FormError {
 export const useAddProduct = () => {
   const [open, setOpen] = useState(false);
   const [addProduct, { isLoading }] = useAddProductMutation();
+  const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -69,6 +72,13 @@ export const useAddProduct = () => {
 
     try {
       await addProduct({ title, price: Number(price), description }).unwrap();
+
+      dispatch(
+        showNotification({
+          message: "The product has been added successfully.",
+        }),
+      );
+
       handleClose();
     } catch (e) {
       console.error(e);
