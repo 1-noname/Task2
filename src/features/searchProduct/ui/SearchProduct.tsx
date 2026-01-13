@@ -1,6 +1,7 @@
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 
 import { selectCategory } from "@/features/filterCategory/model/slice/categorySlice";
+import { debounce } from "@/shared/lib";
 import { useAppDispatch, useAppSelector } from "@/shared/lib";
 
 import { selectProductName, setSearch } from "../model/slice/searchSlice";
@@ -20,25 +21,37 @@ export const SearchProduct = ({
 }: SearchProductProps) => {
   const dispatch = useAppDispatch();
 
-  const productName = useAppSelector(selectProductName);
+  const reduxProductName = useAppSelector(selectProductName);
   const selectedCategory = useAppSelector(selectCategory);
+
+  const [localValue, setLocalValue] = useState(reduxProductName);
+  const debounceDispatch = useMemo(() => {
+    return debounce((value: string) => {
+      dispatch(setSearch(value));
+    }, 500);
+  }, [dispatch]);
 
   const isSearchDisabled = Boolean(selectedCategory);
 
   useEffect(() => {
     if (selectedCategory) {
+      setLocalValue("");
       dispatch(setSearch(""));
     }
   }, [selectedCategory, dispatch]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearch(e.target.value));
+    const val = e.target.value;
+
+    setLocalValue(val);
+
+    debounceDispatch(val);
   };
 
   return (
     <div className={cls.search}>
       <input
-        value={productName}
+        value={localValue}
         onChange={handleChange}
         placeholder={
           isSearchDisabled ? "Clear category to search..." : "Type name here..."
