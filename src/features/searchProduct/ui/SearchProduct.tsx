@@ -1,10 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
-
-import { selectCategory } from "@/features/filterCategory/model/slice/categorySlice";
-import { debounce } from "@/shared/lib";
-import { useAppDispatch, useAppSelector } from "@/shared/lib";
-
-import { selectProductName, setSearch } from "../model/slice/searchSlice";
+import { useSearchProduct } from "../model/hooks/useSearchProduct";
 import cls from "./SearchProducts.module.scss";
 
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -19,34 +13,7 @@ export const SearchProduct = ({
   isFilterOpen,
   onToggle,
 }: SearchProductProps) => {
-  const dispatch = useAppDispatch();
-
-  const reduxProductName = useAppSelector(selectProductName);
-  const selectedCategory = useAppSelector(selectCategory);
-
-  const [localValue, setLocalValue] = useState(reduxProductName);
-  const debounceDispatch = useMemo(() => {
-    return debounce((value: string) => {
-      dispatch(setSearch(value));
-    }, 500);
-  }, [dispatch]);
-
-  const isSearchDisabled = Boolean(selectedCategory);
-
-  useEffect(() => {
-    if (selectedCategory) {
-      setLocalValue("");
-      dispatch(setSearch(""));
-    }
-  }, [selectedCategory, dispatch]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-
-    setLocalValue(val);
-
-    debounceDispatch(val);
-  };
+  const { handleChange, localValue, isSearchDisabled } = useSearchProduct();
 
   return (
     <div className={cls.search}>
