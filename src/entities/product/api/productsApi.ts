@@ -17,7 +17,7 @@ const productsApi = baseApi.injectEndpoints({
     }),
 
     getProducts: build.query<ProductsResponse, ProductsLimit>({
-      query: ({ limit = 6, skip = 0, search, category }) => {
+      query: ({ limit = 8, skip = 0, search, category }) => {
         if (search) {
           return {
             url: "products/search",
@@ -47,8 +47,10 @@ const productsApi = baseApi.injectEndpoints({
           },
         };
       },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName;
+      serializeQueryArgs: ({ queryArgs }) => {
+        const { search, category } = queryArgs;
+
+        return `products-${search || "all"}-${category || "all"}`;
       },
 
       merge: (currentCache, newItems, { arg }) => {
@@ -101,7 +103,7 @@ const productsApi = baseApi.injectEndpoints({
           dispatch(
             productsApi.util.updateQueryData(
               "getProducts",
-              { limit: 6, skip: 0 },
+              { limit: 8, skip: 0 },
               (draft) => {
                 if (draft?.products) {
                   draft.products.unshift(patchResult);
@@ -160,7 +162,7 @@ const productsApi = baseApi.injectEndpoints({
           dispatch(
             productsApi.util.updateQueryData(
               "getProducts",
-              { limit: 6, skip: 0 },
+              { limit: 8, skip: 0 },
               (draft) => {
                 draft.products = draft.products.filter(
                   (product) => product.id !== id,
