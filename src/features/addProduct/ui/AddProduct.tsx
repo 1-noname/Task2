@@ -19,7 +19,9 @@ const inputStyles = {
     "& fieldset": { borderColor: "#fff" },
     "&:hover fieldset": { borderColor: "#fff" },
     "&.Mui-focused fieldset": { borderColor: "var(--color-primary)" },
+    "&.Mui-error fieldset": { borderColor: "#d32f2f" },
   },
+  "& .MuiFormHelperText-root.Mui-error": { color: "#d32f2f" },
 };
 
 export const AddProduct = () => {
@@ -35,6 +37,7 @@ export const AddProduct = () => {
     handleDescriptionChange,
     handleClose,
     handleSave,
+    errors,
   } = useAddProduct();
 
   return (
@@ -76,6 +79,8 @@ export const AddProduct = () => {
               fullWidth
               autoFocus
               sx={inputStyles}
+              error={Boolean(errors.title)}
+              helperText={errors.title}
             />
             <TextField
               label="Price ($)"
@@ -85,6 +90,8 @@ export const AddProduct = () => {
               onChange={handlePriceChange}
               fullWidth
               sx={inputStyles}
+              error={Boolean(errors.price)}
+              helperText={errors.price}
             />
             <TextField
               label="Description"
@@ -99,7 +106,7 @@ export const AddProduct = () => {
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{ color: "rgba(255,255,255,0.7)" }}>
+          <Button onClick={handleClose} sx={{ color: "#fff" }}>
             Cancel
           </Button>
           <Button onClick={handleSave} variant="contained" disabled={isLoading}>
