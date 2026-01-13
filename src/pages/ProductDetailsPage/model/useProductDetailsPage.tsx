@@ -5,14 +5,16 @@ import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
 } from "@/entities/product";
+import { useAppDispatch } from "@/shared/lib";
+import { showNotification } from "@/shared/lib/slice/notificationSlice";
 
 export const useProductDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
-
   const { data: product, isLoading } = useGetProductByIdQuery(id ?? "", {
     skip: !id,
   });
   const [updateProduct, { isLoading: isUpdating }] = useUpdateProductMutation();
+  const dispatch = useAppDispatch();
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [formValues, setFormValues] = useState({
@@ -35,6 +37,13 @@ export const useProductDetailsPage = () => {
     if (!product) return;
     try {
       await updateProduct({ id: product.id, ...formValues }).unwrap();
+
+      dispatch(
+        showNotification({
+          message: "The product has been updated successfully.",
+        }),
+      );
+
       setIsEditMode(false);
     } catch (e) {
       console.error("Failed to update", e);
@@ -48,6 +57,12 @@ export const useProductDetailsPage = () => {
         price: product.price,
         description: product.description,
       });
+      dispatch(
+        showNotification({
+          message: "Editing Product canceled",
+          type: "info",
+        }),
+      );
     }
     setIsEditMode(false);
   };
